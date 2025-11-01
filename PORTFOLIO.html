@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Portfólio - Festa Gael Camilo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://cdn.abacus.ai/images/46b73c23-76b5-4244-a0ab-e3e18060c0fe.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            padding: 20px 10px;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 15px;
+        }
+        
+        .info-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .info-card {
+            backdrop-filter: blur(5px);
+            color: #000000;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .info-card.aniversariante {
+            background: rgba(255, 107, 107, 0.5);
+        }
+        
+        .info-card.cliente {
+            background: rgba(79, 172, 254, 0.5);
+        }
+        
+        .info-card.tema {
+            background: rgba(240, 147, 251, 0.5);
+        }
+        
+        .info-card.valor {
+            background: rgba(102, 126, 234, 0.5);
+        }
+        
+        .info-card i {
+            font-size: 2.106em;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .info-card h3 {
+            font-size: 0.9477em;
+            margin-bottom: 5px;
+        }
+        
+        .info-card input {
+            fontSize: 1.3689em;
+            font-weight: bold;
+            color: #000000;
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 5px 10px;
+            text-align: center;
+            width: 100%;
+            outline: none;
+        }
+        
+        .valor-input-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .valor-input-group span {
+            font-size: 1.3689em;
+            font-weight: bold;
+        }
+        
+        .valor-input-group input {
+            width: 80px !important;
+        }
+        
+        .items-section {
+            margin-bottom: 25px;
+        }
+        
+        .items-section h2 {
+            color: #2c3e50;
+            font-size: 1.5795em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            flex-wrap: wrap;
+        }
+        
+        .items-section h2 i {
+            color: #4CAF50;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .items-table thead {
+            background: rgba(102, 126, 234, 0.6);
+        }
+        
+        .items-table th {
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1.14075em;
+            letter-spacing: 0.5px;
+            color: #000000;
+        }
+        
+        .items-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid rgba(240, 240, 240, 0.5);
+        }
+        
+        .items-table tbody tr:nth-child(even) {
+            background: rgba(248, 249, 250, 0.3);
+        }
+        
+        .items-table input {
+            font-size: 1.2636em;
+            font-weight: 500;
+            color: #2c3e50;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(102, 126, 234, 0.5);
+            border-radius: 5px;
+            padding: 4px 8px;
+            outline: none;
+        }
+        
+        .items-table .input-item {
+            width: 50px;
+        }
+        
+        .items-table .input-quantidade {
+            width: 60px;
+        }
+        
+        .items-table .input-descricao {
+            width: 100%;
+        }
+        
+        .btn-remove {
+            background: rgba(244, 67, 54, 0.7);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .btn-remove:disabled {
+            background: rgba(200, 200, 200, 0.5);
+            cursor: not-allowed;
+        }
+        
+        .btn-add {
+            margin-top: 15px;
+            background: rgba(76, 175, 80, 0.8);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-add:hover {
+            background: rgba(76, 175, 80, 1);
+        }
+        
+        .total-section {
+            background: rgba(17, 153, 142, 0.5);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 20px 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .total-section h3 {
+            font-size: 1.447875em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .total-valor-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .total-valor-group span {
+            font-size: 2.413125em;
+            font-weight: bold;
+        }
+        
+        .total-valor-group input {
+            font-size: 2.413125em;
+            font-weight: bold;
+            color: #000000;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(17, 153, 142, 0.8);
+            border-radius: 8px;
+            padding: 5px 15px;
+            text-align: center;
+            width: 150px;
+            outline: none;
+        }
+        
+        .pagamento-section {
+            background: rgba(255, 243, 205, 0.5);
+            backdrop-filter: blur(5px);
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .pagamento-section i {
+            font-size: 2.2815em;
+            color: #ffc107;
+            flex-shrink: 0;
+        }
+        
+        .pagamento-section h4 {
+            color: #856404;
+            margin-bottom: 5px;
+            font-size: 1.254825em;
+            font-weight: 600;
+        }
+        
+        .pagamento-section p {
+            color: #856404;
+            font-size: 1.3689em;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .info-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .total-section {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    
+    <div class="container">
+        <div class="header"></div>
+        
+        <div class="info-section">
+            <div class="info-card aniversariante">
+                <i class="fas fa-birthday-cake"></i>
+                <h3>Aniversariante</h3>
+                <input type="text" id="aniversariante" value="Gael Camilo">
+            </div>
+
+            <div class="info-card cliente">
+                <i class="fas fa-user"></i>
+                <h3>Cliente</h3>
+                <input type="text" id="cliente" value="Roberta">
+            </div>
+
+            <div class="info-card tema">
+                <i class="fas fa-futbol"></i>
+                <h3>Tema</h3>
+                <input type="text" id="tema" value="Futebol">
+            </div>
+
+            <div class="info-card valor">
+                <i class="fas fa-box"></i>
+                <h3>Valor Unitário</h3>
+                <div class="valor-input-group">
+                    <span>R$</span>
+                    <input type="text" id="valorUnitario" value="47,00">
+                </div>
+            </div>
+        </div>
+
+        <div class="items-section">
+            <h2><i class="fas fa-list"></i> Composição:</h2>
+            
+            <div class="table-container">
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantidade</th>
+                            <th>Descrição</th>
+                            <th style="text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaItens">
+                        <tr>
+                            <td><input type="text" class="input-item" value="1"></td>
+                            <td><input type="text" class="input-quantidade" value="18"></td>
+                            <td><input type="text" class="input-descricao" value="Sacola fosca"></td>
+                            <td style="text-align: center;">
+                                <button class="btn-remove" onclick="removerLinha(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="input-item" value="2"></td>
+                            <td><input type="text" class="input-quantidade" value="18"></td>
+                            <td><input type="text" class="input-descricao" value="Tags (variadas)"></td>
+                            <td style="text-align: center;">
+                                <button class="btn-remove" onclick="removerLinha(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="input-item" value="3"></td>
+                            <td><input type="text" class="input-quantidade" value="18"></td>
+                            <td><input type="text" class="input-descricao" value="Lousa com caneta"></td>
+                            <td style="text-align: center;">
+                                <button class="btn-remove" onclick="removerLinha(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="input-item" value="4"></td>
+                            <td><input type="text" class="input-quantidade" value="18"></td>
+                            <td><input type="text" class="input-descricao" value="Saquinho com 10 doces variados"></td>
+                            <td style="text-align: center;">
+                                <button class="btn-remove" onclick="removerLinha(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="input-item" value="5"></td>
+                            <td><input type="text" class="input-quantidade" value="18"></td>
+                            <td><input type="text" class="input-descricao" value="Squeeze formato bola"></td>
+                            <td style="text-align: center;">
+                                <button class="btn-remove" onclick="removerLinha(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="btn-add" onclick="adicionarLinha()">
+                <i class="fas fa-plus-circle"></i> Adicionar Item
+            </button>
+        </div>
+
+        <div class="total-section">
+            <h3><i class="fas fa-calculator"></i> Valor Total</h3>
+            <div class="total-valor-group">
+                <span>R$</span>
+                <input type="text" id="valorTotal" value="846,00">
+            </div>
+        </div>
+
+        <div class="pagamento-section">
+            <i class="fas fa-credit-card"></i>
+            <div>
+                <h4>Condições de Pagamento</h4>
+                <p>A combinar</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function adicionarLinha() {
+            const tabela = document.getElementById('tabelaItens');
+            const numLinhas = tabela.rows.length;
+            const novoNumero = numLinhas + 1;
+            
+            const novaLinha = tabela.insertRow();
+            novaLinha.innerHTML = `
+                <td><input type="text" class="input-item" value="${novoNumero}"></td>
+                <td><input type="text" class="input-quantidade" value=""></td>
+                <td><input type="text" class="input-descricao" value=""></td>
+                <td style="text-align: center;">
+                    <button class="btn-remove" onclick="removerLinha(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            
+            atualizarBotoesRemover();
+        }
+        
+        function removerLinha(botao) {
+            const tabela = document.getElementById('tabelaItens');
+            if (tabela.rows.length > 1) {
+                const linha = botao.parentNode.parentNode;
+                linha.parentNode.removeChild(linha);
+                atualizarBotoesRemover();
+            }
+        }
+        
+        function atualizarBotoesRemover() {
+            const tabela = document.getElementById('tabelaItens');
+            const botoes = tabela.querySelectorAll('.btn-remove');
+            
+            botoes.forEach(botao => {
+                if (tabela.rows.length === 1) {
+                    botao.disabled = true;
+                } else {
+                    botao.disabled = false;
+                }
+            });
+        }
+        
+        // Inicializar estado dos botões
+        atualizarBotoesRemover();
+    </script>
+</body>
+</html>
