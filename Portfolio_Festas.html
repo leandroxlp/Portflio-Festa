@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Portfólio - Festa Gael Camilo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://cdn.abacus.ai/images/46b73c23-76b5-4244-a0ab-e3e18060c0fe.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            padding: 20px 10px;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .upload-section {
+            background: rgba(156, 39, 176, 0.5);
+            backdrop-filter: blur(5px);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .upload-section h3 {
+            color: #000000;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .upload-btn-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .btn-upload {
+            background: rgba(255, 255, 255, 0.9);
+            color: #9c27b0;
+            padding: 10px 25px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid #9c27b0;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-upload:hover {
+            background: #9c27b0;
+            color: white;
+        }
+        
+        .upload-btn-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .info-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .info-card {
+            backdrop-filter: blur(5px);
+            color: #000000;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .info-card.aniversariante {
+            background: rgba(255, 107, 107, 0.5);
+        }
+        
+        .info-card.cliente {
+            background: rgba(79, 172, 254, 0.5);
+        }
+        
+        .info-card.tema {
+            background: rgba(240, 147, 251, 0.5);
+        }
+        
+        .info-card.valor {
+            background: rgba(102, 126, 234, 0.5);
+        }
+        
+        .info-card i {
+            font-size: 2.106em;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .info-card h3 {
+            font-size: 1.658475em;
+            margin-bottom: 5px;
+        }
+        
+        /* Ajuste da fonte dos campos editáveis para 10% menor que os cabeçalhos */
+        .info-card input {
+            font-size: calc(1.658475em * 0.9);
+            font-weight: bold;
+            color: #000000;
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 5px 10px;
+            text-align: center;
+            width: 100%;
+            outline: none;
+        }
+        
+        .info-card .valor-display {
+            font-size: calc(1.658475em * 0.9);
+            font-weight: bold;
+            color: #000000;
+        }
+        
+        .valor-input-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .valor-input-group span {
+            font-size: calc(1.658475em * 0.9);
+            font-weight: bold;
+        }
+        
+        .valor-input-group input {
+            width: 80px !important;
+        }
+        
+        .items-section {
+            margin-bottom: 25px;
+        }
+        
+        .items-section h2 {
+            color: #2c3e50;
+            font-size: 1.5795em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            flex-wrap: wrap;
+        }
+        
+        .items-section h2 i {
+            color: #4CAF50;
+            display: none;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            background: #7B93DB;
+            border-radius: 10px;
+        }
+        
+        .table-container.finalizado {
+            background: #7B93DB;
+        }
+        
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .items-table thead {
+            background: transparent;
+        }
+        
+        .items-table thead.finalizado {
+            background: #7B93DB;
+        }
+        
+        .items-table thead.finalizado tr {
+            background: #7B93DB;
+        }
+        
+        .items-table thead.finalizado th {
+            background: #7B93DB;
+        }
+        
+        .items-table th {
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1.14075em;
+            letter-spacing: 0.5px;
+            color: #000000;
+        }
+        
+        .items-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid rgba(240, 240, 240, 0.5);
+        }
+        
+        .items-table tbody tr:nth-child(even) {
+            background: rgba(248, 249, 250, 0.3);
+        }
+        
+        .items-table input {
+            font-size: 1.8954em;
+            font-weight: 500;
+            color: #2c3e50;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(102, 126, 234, 0.5);
+            border-radius: 5px;
+            padding: 4px 8px;
+            outline: none;
+        }
+        
+        .items-table .input-item {
+            width: 50px;
+        }
+        
+        .items-table .input-quantidade {
+            width: 60px;
+        }
+        
+        .items-table .input-descricao {
+            width: 100%;
+        }
+        
+        .items-table .text-display {
+            font-size: 1.8954em;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .btn-remove {
+            background: rgba(244, 67, 54, 0.7);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        
+        .btn-remove:disabled {
+            background: rgba(200, 200, 200, 0.5);
+            cursor: not-allowed;
+        }
+        
+        .btn-add {
+            margin-top: 15px;
+            background: rgba(76, 175, 80, 0.8);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-add:hover {
+            background: rgba(76, 175, 80, 1);
+        }
+        
+        .btn-finalizar {
+            margin-top: 20px;
+            background: rgba(33, 150, 243, 0.8);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 100%;
+        }
+        
+        .btn-finalizar:hover {
+            background: rgba(33, 150, 243, 1);
+        }
+        
+        .total-section {
+            background: rgba(17, 153, 142, 0.5);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 20px 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .total-section h3 {
+            font-size: 1.447875em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .total-valor-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .total-valor-group span {
+            font-size: 1.689188em;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .total-valor-group input {
+            font-size: 1.689188em;
+            font-weight: bold;
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            padding: 5px 15px;
+            text-align: center;
+            width: 150px;
+            outline: none;
+        }
+        
+        .total-valor-group .valor-display {
+            font-size: 1.689188em;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .pagamento-section {
+            background: rgba(255, 243, 205, 0.5);
+            backdrop-filter: blur(5px);
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .pagamento-section i {
+            font-size: 2.2815em;
+            color: #ffc107;
+            flex-shrink: 0;
+        }
+        
+        .pagamento-section h4 {
+            color: #856404;
+            margin-bottom: 5px;
+            font-size: 1.254825em;
+            font-weight: 600;
+        }
+        
+        .pagamento-section input {
+            color: #856404;
+            font-size: 1.254825em;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(255, 193, 7, 0.5);
+            border-radius: 8px;
+            padding: 5px 10px;
+            width: 100%;
+            outline: none;
+        }
+        
+        .pagamento-section .pagamento-display {
+            color: #856404;
+            font-size: 1.254825em;
+            font-weight: bold;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 255, 0.95));
+            margin: 15% auto;
+            padding: 30px;
+            border: none;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .modal-content h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .modal-content p {
+            color: #555;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .modal-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-btn.prosseguir {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+        
+        .modal-btn.prosseguir:hover {
+            background: linear-gradient(135deg, #45a049, #3d8b40);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-btn.voltar {
+            background: linear-gradient(135deg, #f44336, #da190b);
+            color: white;
+        }
+        
+        .modal-btn.voltar:hover {
+            background: linear-gradient(135deg, #da190b, #c41408);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        @media (max-width: 768px) {
+            .info-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .total-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .modal-content {
+                margin: 30% auto;
+                width: 85%;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    
+    <div class="container">
+        
+        <!-- Seção de Upload de Imagem -->
+        <div class="upload-section editable">
+            <h3><i class="fas fa-image"></i> Alterar Imagem de Fundo</h3>
+            <div class="upload-btn-wrapper">
+                <label class="btn-upload">
+                    <i class="fas fa-upload"></i> Escolher Imagem
+                    <input type="file" id="uploadImagem" accept="image/*" onchange="trocarImagemFundo(event)">
+                </label>
+            </div>
+        </div>
+        
+        <div class="info-section">
+            <div class="info-card aniversariante">
+                <i class="fas fa-birthday-cake"></i>
+                <h3>Aniversariante</h3>
+                <input type="text" id="aniversariante" value="Gael Camilo" class="editable">
+                <div class="valor-display hidden" id="aniversariante-display">Gael Camilo</div>
+            </div>
+
+            <div class="info-card cliente">
+                <i class="fas fa-user"></i>
+                <h3>Cliente</h3>
+                <input type="text" id="cliente" value="Roberta" class="editable">
+                <div class="valor-display hidden" id="cliente-display">Roberta</div>
+            </div>
+
+            <div class="info-card tema">
+                <i class="fas fa-futbol"></i>
+                <h3>Tema</h3>
+                <input type="text" id="tema" value="Futebol" class="editable">
+                <div class="valor-display hidden" id="tema-display">Futebol</div>
+            </div>
+
+            <div class="info-card valor">
+                <i class="fas fa-box"></i>
+                <h3>Valor Unitário</h3>
+                <div class="valor-input-group">
+                    <span>R$</span>
+                    <input type="text" id="valorUnitario" value="47,00" class="editable">
+                    <div class="valor-display hidden" id="valorUnitario-display">47,00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="items-section">
+            <h2><i class="fas fa-list"></i> Composição:</h2>
+            
+            <div class="table-container" id="tableContainer">
+                <table class="items-table">
+                    <thead id="tabelaCabecalho">
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantidade</th>
+                            <th>Descrição</th>
+                            <th style="text-align: center;" class="acoes-header editable">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaItens">
+                        <tr>
+                            <td><input type="text" class="input-item editable" value="1"></td>
+                            <td><input type="text" class="input-quantidade editable" value="18"></td>
+                            <td><input type="text" class="input-descricao editable" value="Sacola fosca"></td>
+                            <td style="text-align: center;" class="acoes-col editable">
+                                <button class="btn-remove editable" onclick="removerLinha(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="input-item editable" value="2"></td>
+                            <td><input type="text" class="input-quantidade editable" value="18"></td>
+                            <td><input type="text" class="input-descricao editable" value="Tags (variadas)"></td>
+                            <td style="text-align: center;" class="acoes-col editable">
+                                <button class="btn-remove editable" onclick="removerLinha(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="input-item editable" value="3"></td>
+                            <td><input type="text" class="input-quantidade editable" value="18"></td>
+                            <td><input type="text" class="input-descricao editable" value="Lousa com caneta"></td>
+                            <td style="text-align: center;" class="acoes-col editable">
+                                <button class="btn-remove editable" onclick="removerLinha(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="input-item editable" value="4"></td>
+                            <td><input type="text" class="input-quantidade editable" value="18"></td>
+                            <td><input type="text" class="input-descricao editable" value="Saquinho com 10 doces variados"></td>
+                            <td style="text-align: center;" class="acoes-col editable">
+                                <button class="btn-remove editable" onclick="removerLinha(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="input-item editable" value="5"></td>
+                            <td><input type="text" class="input-quantidade editable" value="18"></td>
+                            <td><input type="text" class="input-descricao editable" value="Squeeze formato bola"></td>
+                            <td style="text-align: center;" class="acoes-col editable">
+                                <button class="btn-remove editable" onclick="removerLinha(this)">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="btn-add editable" onclick="adicionarLinha()">
+                <i class="fas fa-plus-circle"></i> Adicionar Item
+            </button>
+        </div>
+
+        <div class="total-section">
+            <h3><i class="fas fa-calculator"></i> Valor Total</h3>
+            <div class="total-valor-group">
+                <span>R$</span>
+                <input type="text" id="valorTotal" value="846,00" class="editable">
+                <div class="valor-display hidden" id="valorTotal-display">846,00</div>
+            </div>
+        </div>
+
+        <div class="pagamento-section">
+            <i class="fas fa-credit-card"></i>
+            <div style="flex: 1;">
+                <h4>Condições de Pagamento</h4>
+                <input type="text" id="condicoesPagamento" value="A combinar" class="editable">
+                <div class="pagamento-display hidden" id="condicoesPagamento-display">A combinar</div>
+            </div>
+        </div>
+
+        <button class="btn-finalizar editable" onclick="mostrarModal()">
+            <i class="fas fa-check-circle"></i> Finalizar
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-exclamation-circle" style="color: #ff9800;"></i> Confirmar Finalização</h2>
+            <p>Ao prosseguir, o documento será finalizado e não poderá mais ser editado. Deseja continuar?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn prosseguir" onclick="finalizarDocumento()">
+                    <i class="fas fa-check"></i> Prosseguir
+                </button>
+                <button class="modal-btn voltar" onclick="fecharModal()">
+                    <i class="fas fa-times"></i> Voltar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function trocarImagemFundo(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.body.style.backgroundImage = `url('${e.target.result}')`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function adicionarLinha() {
+            const tabela = document.getElementById('tabelaItens');
+            const numLinhas = tabela.rows.length;
+            const novoNumero = numLinhas + 1;
+            
+            const novaLinha = tabela.insertRow();
+            novaLinha.innerHTML = `
+                <td><input type="text" class="input-item editable" value="${novoNumero}"></td>
+                <td><input type="text" class="input-quantidade editable" value=""></td>
+                <td><input type="text" class="input-descricao editable" value=""></td>
+                <td style="text-align: center;" class="acoes-col editable">
+                    <button class="btn-remove editable" onclick="removerLinha(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            `;
+            
+            atualizarBotoesRemover();
+        }
+        
+        function removerLinha(botao) {
+            const tabela = document.getElementById('tabelaItens');
+            if (tabela.rows.length > 1) {
+                const linha = botao.parentNode.parentNode;
+                linha.parentNode.removeChild(linha);
+                atualizarBotoesRemover();
+            }
+        }
+        
+        function atualizarBotoesRemover() {
+            const tabela = document.getElementById('tabelaItens');
+            const botoes = tabela.querySelectorAll('.btn-remove');
+            
+            botoes.forEach(botao => {
+                if (tabela.rows.length === 1) {
+                    botao.disabled = true;
+                } else {
+                    botao.disabled = false;
+                }
+            });
+        }
+        
+        function mostrarModal() {
+            document.getElementById('modal').style.display = 'block';
+        }
+        
+        function fecharModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+        
+        function finalizarDocumento() {
+            // Ocultar todos os inputs e mostrar valores como texto
+            const editaveis = document.querySelectorAll('.editable');
+            editaveis.forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Adicionar cor de fundo ao cabeçalho da tabela
+            document.getElementById('tabelaCabecalho').classList.add('finalizado');
+            document.getElementById('tableContainer').classList.add('finalizado');
+            
+            // Mostrar valores dos cards
+            document.getElementById('aniversariante-display').textContent = document.getElementById('aniversariante').value;
+            document.getElementById('aniversariante-display').classList.remove('hidden');
+            
+            document.getElementById('cliente-display').textContent = document.getElementById('cliente').value;
+            document.getElementById('cliente-display').classList.remove('hidden');
+            
+            document.getElementById('tema-display').textContent = document.getElementById('tema').value;
+            document.getElementById('tema-display').classList.remove('hidden');
+            
+            document.getElementById('valorUnitario-display').textContent = document.getElementById('valorUnitario').value;
+            document.getElementById('valorUnitario-display').classList.remove('hidden');
+            
+            document.getElementById('valorTotal-display').textContent = document.getElementById('valorTotal').value;
+            document.getElementById('valorTotal-display').classList.remove('hidden');
+            
+            document.getElementById('condicoesPagamento-display').textContent = document.getElementById('condicoesPagamento').value;
+            document.getElementById('condicoesPagamento-display').classList.remove('hidden');
+            
+            // Converter inputs da tabela em texto
+            const tabela = document.getElementById('tabelaItens');
+            const linhas = tabela.querySelectorAll('tr');
+            
+            linhas.forEach(linha => {
+                const inputs = linha.querySelectorAll('input');
+                inputs.forEach(input => {
+                    const span = document.createElement('span');
+                    span.className = 'text-display';
+                    span.textContent = input.value;
+                    input.parentNode.replaceChild(span, input);
+                });
+            });
+            
+            fecharModal();
+        }
+        
+        // Fechar modal ao clicar fora dele
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target == modal) {
+                fecharModal();
+            }
+        }
+        
+        // Inicializar estado dos botões
+        atualizarBotoesRemover();
+    </script>
+</body>
+</html>
